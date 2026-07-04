@@ -1,0 +1,56 @@
+.text-signature {
+  font-size: var(--text-signature);
+  line-height: var(--leading-signature);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 600;
+}
+
+.text-hero {
+  font-size: var(--text-hero);
+  line-height: var(--leading-hero);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 600;
+}
+
+.text-section {
+  font-size: var(--text-section);
+  line-height: var(--leading-section);
+  letter-spacing: var(--tracking-title);
+  font-weight: 600;
+}
+
+.text-subsection {
+  font-size: var(--text-subsection);
+  line-height: var(--leading-subsection);
+  letter-spacing: var(--tracking-title);
+  font-weight: 500;
+}
+
+.text-lead {
+  font-size: var(--text-lead);
+  line-height: var(--leading-lead);
+  letter-spacing: var(--tracking-body);
+  font-weight: 400;
+}
+
+.text-body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
+  font-weight: 400;
+}
+
+.text-support {
+  font-size: var(--text-support);
+  line-height: var(--leading-support);
+  letter-spacing: var(--tracking-body);
+  font-weight: 400;
+}
+
+.text-utility {
+  font-size: var(--text-utility);
+  line-height: var(--leading-utility);
+  letter-spacing: var(--tracking-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+}

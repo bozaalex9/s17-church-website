@@ -1,0 +1,36 @@
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+}
+
+.focus-ring:focus-visible {
+  outline-color: var(--color-focus);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.section-y-sm { padding-block: var(--section-y-sm); }
+.section-y-md { padding-block: var(--section-y-md); }
+.section-y-lg { padding-block: var(--section-y-lg); }
+.section-y-cinematic { padding-block: var(--section-y-cinematic); }
+
+.motion-safe-transform {
+  transform: translateZ(0);
+}
+
+.section-contain {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 900px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .will-change-transform {
+    will-change: auto !important;
+  }
+}

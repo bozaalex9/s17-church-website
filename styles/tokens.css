@@ -1,0 +1,89 @@
+:root {
+  /* Color tokens */
+  --color-ink: #111111;
+  --color-ink-soft: #2a2a2a;
+  --color-muted: #666666;
+  --color-faint: #8a8a8a;
+  --color-paper: #f7f4ee;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-line: rgba(17, 17, 17, 0.14);
+  --color-line-inverse: rgba(255, 255, 255, 0.22);
+  --color-bronze: #9a7a47;
+  --color-burgundy: #5c1f24;
+  --color-focus: #9a7a47;
+
+  /* Typography tokens — Helvetica Neue is the locked S17 typeface */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --tracking-tight: -0.055em;
+  --tracking-title: -0.04em;
+  --tracking-body: -0.01em;
+  --tracking-utility: 0.08em;
+
+  --text-signature: clamp(4.5rem, 18vw, 18rem);
+  --text-hero: clamp(3.75rem, 11vw, 12rem);
+  --text-section: clamp(2.75rem, 7vw, 7.5rem);
+  --text-subsection: clamp(1.75rem, 3vw, 3rem);
+  --text-lead: clamp(1.25rem, 2vw, 1.75rem);
+  --text-body: 1rem;
+  --text-support: 0.875rem;
+  --text-utility: 0.75rem;
+
+  --leading-signature: 0.82;
+  --leading-hero: 0.86;
+  --leading-section: 0.9;
+  --leading-subsection: 1.05;
+  --leading-lead: 1.35;
+  --leading-body: 1.65;
+  --leading-support: 1.45;
+  --leading-utility: 1.1;
+
+  /* Spacing tokens */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+  --space-48: 12rem;
+
+  --section-y-sm: clamp(4rem, 8vw, 7rem);
+  --section-y-md: clamp(6rem, 11vw, 11rem);
+  --section-y-lg: clamp(8rem, 15vw, 16rem);
+  --section-y-cinematic: clamp(10rem, 20vw, 24rem);
+
+  /* Container tokens */
+  --container-page: 90rem;
+  --container-wide: 104rem;
+  --container-reading: 45rem;
+  --container-narrow: 36rem;
+  --container-gutter: clamp(1.25rem, 4vw, 4rem);
+
+  /* Radius tokens */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.875rem;
+
+  /* Motion tokens */
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-threshold: cubic-bezier(0.19, 1, 0.22, 1);
+  --duration-fast: 180ms;
+  --duration-base: 360ms;
+  --duration-slow: 700ms;
+  --duration-cinematic: 1100ms;
+
+  --z-header: 50;
+  --z-menu: 80;
+  --z-modal: 100;
+}
