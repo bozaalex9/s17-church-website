@@ -137,7 +137,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                           )}
                         >
                           <ul className="overflow-hidden pt-5">
-                            {item.items.map((child) => (
+                            {item.items?.map((child) => (
                               <li key={child.href}>
                                 <Link
                                   href={child.href}
