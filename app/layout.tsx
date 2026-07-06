@@ -4,6 +4,7 @@ import "./globals.css";
 import { defaultMetadata } from "@/lib/metadata";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { MotionProvider } from "@/components/motion/EditorialMotion";
 
 export const metadata: Metadata = defaultMetadata;
 
@@ -27,9 +28,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           Skip to content
         </a>
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <MotionProvider>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </MotionProvider>
       </body>
     </html>
   );

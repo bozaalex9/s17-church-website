@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/layout/Section";
 import { Card } from "@/components/ui/Card";
 import type { CollectionItem } from "@/types/content";
 import { cn } from "@/lib/cn";
+import { EditorialObject, MotionCard, RevealSequence } from "@/components/motion/EditorialMotion";
 
 interface CollectionProps {
   eyebrow: string;
@@ -15,28 +15,22 @@ interface CollectionProps {
 }
 
 export function Collection({ eyebrow, title, items, editorial = false }: CollectionProps) {
-  const reduceMotion = useReducedMotion();
-
   return (
     <Section tone="white" spacing="cinematic">
-      <div className={editorial ? "mb-[clamp(6rem,14vw,14rem)] max-w-[92rem]" : "mb-16 max-w-[58rem]"}>
-        <p className={cn("text-utility mb-6 text-[var(--color-muted)]", editorial && "mb-10 md:mb-14")}>{eyebrow}</p>
-        <h2 className={cn(
-          "text-section text-balance",
-          editorial && "max-w-[12ch] text-[clamp(3.75rem,10vw,10.5rem)] font-bold leading-[0.82] tracking-[-0.06em]",
-        )}>{title}</h2>
-      </div>
-      <motion.div
-        initial={reduceMotion ? false : "hidden"}
-        whileInView={reduceMotion ? undefined : "visible"}
-        viewport={{ once: true, amount: 0.18 }}
-        variants={{ visible: { transition: { staggerChildren: 0.14 } }, hidden: {} }}
-        className="grid gap-5 lg:grid-cols-3"
-      >
+      <RevealSequence energy={editorial ? "cinematic" : "editorial"}>
+        <EditorialObject role="typography" energy={editorial ? "cinematic" : "editorial"} className={editorial ? "mb-[clamp(6rem,14vw,14rem)] max-w-[92rem]" : "mb-16 max-w-[58rem]"}>
+          <p className={cn("text-utility mb-6 text-[var(--color-muted)]", editorial && "mb-10 md:mb-14")}>{eyebrow}</p>
+          <h2 className={cn(
+            "text-section text-balance",
+            editorial && "max-w-[12ch] text-[clamp(3.75rem,10vw,10.5rem)] font-bold leading-[0.82] tracking-[-0.06em]",
+          )}>{title}</h2>
+        </EditorialObject>
+      </RevealSequence>
+      <RevealSequence energy={editorial ? "high-energy" : "calm"} className="grid gap-5 lg:grid-cols-3">
         {items.map((item) => {
           const key = item.href ?? `${item.eyebrow}-${item.title}`;
           const card = (
-            <Card className="group flex min-h-[34rem] flex-col justify-between overflow-hidden transition-transform duration-cinematic ease-cinematic hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0" padding="lg">
+            <Card className="group flex min-h-[34rem] flex-col justify-between overflow-hidden" padding="lg">
               <div>
                 <p className="text-utility mb-7 text-[var(--color-bronze)]">{item.eyebrow}</p>
                 <h3 className={cn("text-subsection text-balance", editorial && "font-semibold leading-[0.98] tracking-[-0.045em]")}>{item.title}</h3>
@@ -53,14 +47,7 @@ export function Collection({ eyebrow, title, items, editorial = false }: Collect
           );
 
           return (
-            <motion.div
-              key={key}
-              variants={{
-                hidden: { opacity: 0, y: 38, scale: 0.985 },
-                visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.72, ease: [0.16, 1, 0.3, 1] } },
-              }}
-              className="transform-gpu will-change-transform"
-            >
+            <MotionCard key={key} energy={editorial ? "high-energy" : "calm"} className="h-full">
               {item.href ? (
                 <Link href={item.href} className="focus-ring block h-full">
                   {card}
@@ -68,10 +55,10 @@ export function Collection({ eyebrow, title, items, editorial = false }: Collect
               ) : (
                 card
               )}
-            </motion.div>
+            </MotionCard>
           );
         })}
-      </motion.div>
+      </RevealSequence>
     </Section>
   );
 }
