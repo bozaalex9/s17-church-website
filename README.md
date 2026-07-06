@@ -2,6 +2,10 @@
 
 This package contains the approved S17 website code foundation with optimization/audit updates applied.
 
+## Governance
+
+All design and implementation work is governed by the [S17 Website Governance](./docs/governance/README.md) documents. The current Website Constitution supersedes every prior constitution and any guidance derived from one.
+
 ## Included
 
 - Approved global layout

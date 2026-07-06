@@ -17,16 +17,17 @@ Scope: mobile, accessibility, SEO, performance, image loading, animation perform
 - Relaxed Collection item typing so non-link belief/value cards do not require fake hrefs.
 - Fixed Card typing to use valid HTML element types.
 
-## Preserved Design / Motion Rules
+## Historical Scope Constraints
+
+This audit records the scope of its optimization pass; it is not a governing design or motion authority. Where this report conflicts with the [S17 Website Governance](../docs/governance/README.md), the governance documents control.
 
 - No redesign.
 - No new Beliefs page.
 - No Sermons page.
 - Give remains `/give` and bridges to Church Center.
-- Homepage, Visit, Gather, Grow, Go, and About preserve cinematic Journey behavior.
+- Homepage, Visit, Gather, Grow, Go, and About retain their content and route responsibilities while their presentation follows the current Design and Motion Bibles.
 - Native scroll only; no scroll hijacking.
-- Threshold-style transitions remain intact.
-- Dramatic parallax remains available only when story-serving.
+- Expressive transitions and depth remain available when they serve ordered, joyful proclamation.
 
 ## Deployment Readiness Notes
 
