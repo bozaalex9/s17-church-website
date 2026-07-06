@@ -28,6 +28,7 @@ export default function HomePage() {
             body={homeOrientation.body}
             imageLabel={homeImages.welcome.label}
             cinematic
+            editorial
           >
             <Button href="/visit" variant="primary" size="lg">
               Plan Your Visit
@@ -35,7 +36,7 @@ export default function HomePage() {
           </Editorial>
         </ThresholdFrame>
 
-        <Collection eyebrow="The S17 pathway" title="We gather. We grow. We go." items={homeChapters} />
+        <Collection eyebrow="The S17 pathway" title="We gather. We grow. We go." items={homeChapters} editorial />
 
         <CTA
           eyebrow={homeInvitation.eyebrow}
@@ -43,6 +44,7 @@ export default function HomePage() {
           body={homeInvitation.body}
           primaryCta={homeInvitation.primaryCta}
           secondaryCta={homeInvitation.secondaryCta}
+          editorial
         />
       </Journey>
     </main>

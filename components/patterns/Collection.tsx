@@ -5,21 +5,26 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/layout/Section";
 import { Card } from "@/components/ui/Card";
 import type { CollectionItem } from "@/types/content";
+import { cn } from "@/lib/cn";
 
 interface CollectionProps {
   eyebrow: string;
   title: string;
   items: CollectionItem[];
+  editorial?: boolean;
 }
 
-export function Collection({ eyebrow, title, items }: CollectionProps) {
+export function Collection({ eyebrow, title, items, editorial = false }: CollectionProps) {
   const reduceMotion = useReducedMotion();
 
   return (
     <Section tone="white" spacing="cinematic">
-      <div className="mb-16 max-w-[58rem]">
-        <p className="text-utility mb-6 text-[var(--color-muted)]">{eyebrow}</p>
-        <h2 className="text-section text-balance">{title}</h2>
+      <div className={editorial ? "mb-[clamp(6rem,14vw,14rem)] max-w-[92rem]" : "mb-16 max-w-[58rem]"}>
+        <p className={cn("text-utility mb-6 text-[var(--color-muted)]", editorial && "mb-10 md:mb-14")}>{eyebrow}</p>
+        <h2 className={cn(
+          "text-section text-balance",
+          editorial && "max-w-[12ch] text-[clamp(3.75rem,10vw,10.5rem)] font-bold leading-[0.82] tracking-[-0.06em]",
+        )}>{title}</h2>
       </div>
       <motion.div
         initial={reduceMotion ? false : "hidden"}
@@ -34,8 +39,8 @@ export function Collection({ eyebrow, title, items }: CollectionProps) {
             <Card className="group flex min-h-[34rem] flex-col justify-between overflow-hidden transition-transform duration-cinematic ease-cinematic hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0" padding="lg">
               <div>
                 <p className="text-utility mb-7 text-[var(--color-bronze)]">{item.eyebrow}</p>
-                <h3 className="text-subsection text-balance">{item.title}</h3>
-                <p className="text-body mt-6 text-[var(--color-muted)]">{item.body}</p>
+                <h3 className={cn("text-subsection text-balance", editorial && "font-semibold leading-[0.98] tracking-[-0.045em]")}>{item.title}</h3>
+                <p className={cn("text-body mt-6 text-[var(--color-muted)]", editorial && "max-w-[32rem] text-support")}>{item.body}</p>
               </div>
               {item.imageLabel ? (
                 <div

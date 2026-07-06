@@ -13,6 +13,7 @@ interface EditorialProps {
   align?: "left" | "center";
   imageLabel?: string;
   cinematic?: boolean;
+  editorial?: boolean;
 }
 
 export function Editorial({
@@ -25,21 +26,33 @@ export function Editorial({
   align = "left",
   imageLabel,
   cinematic = false,
+  editorial = false,
 }: EditorialProps) {
   return (
     <Section tone={tone} spacing={spacing} containerWidth={cinematic ? "wide" : "page"}>
-      <div className={cn("grid gap-12 lg:grid-cols-12 lg:items-end", align === "center" && "text-center")}>
-        <StoryReveal className="lg:col-span-7">
-          {eyebrow ? <p className="text-utility mb-6 text-[var(--color-muted)]">{eyebrow}</p> : null}
-          <h2 className="text-section text-balance">{title}</h2>
+      <div className={cn(
+        "grid gap-12 lg:grid-cols-12 lg:items-end",
+        align === "center" && "text-center",
+        editorial && "gap-16 lg:block",
+      )}>
+        <StoryReveal className={cn("lg:col-span-7", editorial && "max-w-[88rem]")}>
+          {eyebrow ? <p className={cn("text-utility mb-6 text-[var(--color-muted)]", editorial && "mb-10 md:mb-14")}>{eyebrow}</p> : null}
+          <h2 className={cn(
+            "text-section text-balance",
+            editorial && "text-[clamp(3.25rem,10vw,10.5rem)] font-bold leading-[0.84] tracking-[-0.06em]",
+          )}>{title}</h2>
         </StoryReveal>
-        <StoryReveal delay={0.08} className={cn("lg:col-span-4 lg:col-start-9", align === "center" && "mx-auto max-w-reading lg:col-span-8 lg:col-start-3")}>
-          {body ? <p className="text-lead text-pretty text-[var(--color-muted)]">{body}</p> : null}
-          {children ? <div className={cn(body && "mt-8")}>{children}</div> : null}
+        <StoryReveal delay={0.08} className={cn(
+          "lg:col-span-4 lg:col-start-9",
+          align === "center" && "mx-auto max-w-reading lg:col-span-8 lg:col-start-3",
+          editorial && "mt-16 max-w-narrow lg:mt-24",
+        )}>
+          {body ? <p className={cn("text-lead text-pretty text-[var(--color-muted)]", editorial && "text-body")}>{body}</p> : null}
+          {children ? <div className={cn(body && (editorial ? "mt-10" : "mt-8"))}>{children}</div> : null}
         </StoryReveal>
       </div>
       {imageLabel ? (
-        <ParallaxFrame depth={cinematic ? "dramatic" : "subtle"} className="mt-20">
+        <ParallaxFrame depth={cinematic ? "dramatic" : "subtle"} className={editorial ? "mt-24 md:mt-40" : "mt-20"}>
           <div
             role="img"
             aria-label={imageLabel}

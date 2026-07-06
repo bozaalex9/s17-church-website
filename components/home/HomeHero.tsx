@@ -76,7 +76,7 @@ export function HomeHero() {
           initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          className="transform-gpu text-[clamp(3rem,13.2vw,5.25rem)] font-semibold leading-[0.84] tracking-[var(--tracking-tight)] will-change-transform md:text-[clamp(5rem,10.5vw,11rem)]"
+          className="transform-gpu text-[clamp(3rem,13.2vw,5.25rem)] font-bold leading-[0.82] tracking-[-0.06em] will-change-transform md:text-[clamp(5rem,10.5vw,11rem)]"
         >
           <span className="block whitespace-nowrap">Where friends</span>
           <span className="block whitespace-nowrap">become family.</span>
