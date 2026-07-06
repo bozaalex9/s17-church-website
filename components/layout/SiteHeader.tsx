@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { MobileMenu } from "./MobileMenu";
@@ -39,11 +40,11 @@ export function SiteHeader() {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-header py-5 transition-colors duration-base ease-standard",
+          "fixed inset-x-0 top-0 z-header pb-5 pt-[calc(1.25rem+env(safe-area-inset-top))] transition-colors duration-base ease-standard",
           headerTone,
         )}
       >
-        <div className="grid grid-cols-3 items-center px-[var(--container-gutter)]">
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center pl-[max(var(--container-gutter),env(safe-area-inset-left))] pr-[max(var(--container-gutter),env(safe-area-inset-right))]">
           <button
             ref={menuButtonRef}
             type="button"
@@ -58,8 +59,18 @@ export function SiteHeader() {
             </svg>
           </button>
 
-          <Link href="/" className="focus-ring min-h-11 justify-self-center text-utility" aria-label="S17 Church home">
-            S17
+          <Link href="/" className="focus-ring flex min-h-11 items-center justify-self-center" aria-label="S17 Church home">
+            <Image
+              src="/images/branding/s17-logo-white.png"
+              alt=""
+              width={948}
+              height={536}
+              priority
+              className={cn(
+                "h-auto w-16 transition-[filter] duration-base ease-standard md:w-[4.5rem]",
+                (!isHome || pastHomeHero) && "brightness-0",
+              )}
+            />
           </Link>
 
           <button
