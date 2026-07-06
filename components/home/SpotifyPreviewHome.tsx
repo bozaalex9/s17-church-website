@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const rotatingWords = ["friends", "neighbors", "disciples", "the city"];
 
@@ -34,14 +35,62 @@ const nextSteps = [
 
 export function SpotifyPreviewHome() {
   const [word, setWord] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const timer = window.setInterval(() => setWord((current) => (current + 1) % rotatingWords.length), 2200);
     return () => window.clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const menu = menuRef.current;
+    const focusable = menu?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    window.requestAnimationFrame(() => focusable?.[0]?.focus());
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+      window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+    };
+  }, [menuOpen]);
+
+  const menuItems = [
+    ["About", "/about"],
+    ["Gather", "/gather"],
+    ["Grow", "/grow"],
+    ["Go", "/go"],
+    ["Give", "/give"],
+  ];
+
   return (
-    <main className="spotify-home" id="main-content">
+    <main className={`spotify-home${menuOpen ? " menu-is-open" : ""}`} id="main-content">
       <header>
         <div className="wrap nav-inner">
           <a href="#" className="logo"><img src="/images/preview/s17-preview-logo.png" alt="S17" style={{ height: 22, width: "auto" }} /></a>
@@ -59,9 +108,68 @@ export function SpotifyPreviewHome() {
           <div className="nav-divider" />
           <div className="nav-right"><a href="#" className="text-link">Resources</a><a href="#" className="text-link">Contact</a></div>
           <a href="#visit" className="nav-cta">Plan Your Visit</a>
-          <button className="menu-btn" aria-label="Menu"><span className="icon">☰</span></button>
+          <button
+            ref={menuButtonRef}
+            className="menu-btn"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="editorial-menu"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span className="menu-icon" aria-hidden="true"><span /><span /></span>
+          </button>
         </div>
       </header>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            ref={menuRef}
+            id="editorial-menu"
+            className="editorial-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.015 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.01 }}
+            transition={{ duration: reduceMotion ? 0.12 : 0.58, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="menu-atmosphere" aria-hidden="true" />
+            <div className="wrap menu-scene">
+              <nav className="editorial-links" aria-label="Menu navigation">
+                {menuItems.map(([label, href], index) => (
+                  <motion.a
+                    href={href}
+                    key={label}
+                    onClick={() => setMenuOpen(false)}
+                    initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 34, scale: 0.985 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{
+                      duration: reduceMotion ? 0.12 : 0.62,
+                      delay: reduceMotion ? 0 : 0.12 + index * 0.065,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    <span className="menu-number">0{index + 1}</span>
+                    <span>{label}</span>
+                  </motion.a>
+                ))}
+              </nav>
+              <motion.div
+                className="menu-utilities"
+                initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: reduceMotion ? 0.12 : 0.5, delay: reduceMotion ? 0 : 0.48 }}
+              >
+                <a href="/visit" onClick={() => setMenuOpen(false)}>Plan your visit</a>
+                <a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <section className="hero">
         <div className="hero-mark"><img src="/images/preview/s17-preview-hero.jpg" alt="S17 community gathered outdoors in Miami" /></div>
