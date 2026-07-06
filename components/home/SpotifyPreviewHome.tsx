@@ -158,13 +158,22 @@ export function SpotifyPreviewHome() {
                 ))}
               </nav>
               <motion.div
-                className="menu-utilities"
+                className="menu-bottom"
                 initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: reduceMotion ? 0.12 : 0.5, delay: reduceMotion ? 0 : 0.48 }}
               >
-                <a href="/visit" onClick={() => setMenuOpen(false)}>Plan your visit</a>
-                <a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a>
+                <nav className="menu-utilities" aria-label="Menu utility navigation">
+                  <div className="menu-utility-primary">
+                    <a href="/visit" onClick={() => setMenuOpen(false)}>Plan your visit</a>
+                    <a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a>
+                  </div>
+                  <span className="menu-separator" aria-hidden="true" />
+                  <a className="menu-login" href="https://s17.churchcenter.com/">Log in</a>
+                </nav>
+                <a className="menu-footer-logo" href="/" aria-label="S17 Church home" onClick={() => setMenuOpen(false)}>
+                  <img src="/images/branding/s17-logo-white.png" alt="" />
+                </a>
               </motion.div>
             </div>
           </motion.div>

@@ -71,9 +71,16 @@
   .spotify-home .editorial-links a{display:flex;align-items:baseline;gap:16px;width:100%;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:clamp(2.65rem,11.5vw,4.75rem);font-weight:700;line-height:1.04;letter-spacing:-.032em;padding:3px 0;color:#fff;transition:color .18s ease,transform .18s ease;}
   .spotify-home .editorial-links a:hover,.spotify-home .editorial-links a:focus-visible{color:var(--accent);transform:translateX(5px);outline:none;}
   .spotify-home .menu-number{font-size:10px;font-weight:500;letter-spacing:.1em;color:rgba(255,255,255,.36);min-width:20px;}
-  .spotify-home .menu-utilities{display:flex;gap:32px;padding-top:28px;border-top:1px solid rgba(255,255,255,.18);}
-  .spotify-home .menu-utilities a{font-size:17px;font-weight:400;line-height:1.3;letter-spacing:-.012em;color:rgba(255,255,255,.72);}
+  .spotify-home .menu-bottom{display:flex;flex-direction:column;align-items:flex-start;}
+  .spotify-home .menu-utilities{display:flex;flex-direction:column;align-items:flex-start;gap:0;width:100%;}
+  .spotify-home .menu-utility-primary{display:flex;flex-direction:column;gap:10px;}
+  .spotify-home .menu-utility-primary a{font-size:clamp(1.8rem,8vw,2.4rem);font-weight:700;line-height:1.12;letter-spacing:-.028em;color:#fff;}
+  .spotify-home .menu-separator{display:block;width:34px;height:2px;margin:25px 0 24px;background:rgba(255,255,255,.9);}
+  .spotify-home .menu-login{font-size:clamp(1.55rem,7vw,2rem);font-weight:400;line-height:1.2;letter-spacing:-.018em;color:rgba(255,255,255,.76);}
   .spotify-home .menu-utilities a:hover,.spotify-home .menu-utilities a:focus-visible{color:var(--accent);outline:none;}
+  .spotify-home .menu-footer-logo{display:block;margin-top:clamp(100px,18vh,190px);}
+  .spotify-home .menu-footer-logo img{width:auto;height:34px;object-fit:contain;}
+  .spotify-home .menu-footer-logo:focus-visible{outline:2px solid var(--accent);outline-offset:6px;}
   .spotify-home .hero-mark,.spotify-home .hero-inner,.spotify-home .hero .scrim{transition:transform .75s cubic-bezier(.22,1,.36,1),opacity .6s ease,filter .6s ease;}
   .spotify-home.menu-is-open .hero-mark{transform:translate(-50%,-50%) scale(.94);filter:saturate(.6);opacity:.46;}
   .spotify-home.menu-is-open .hero-inner{transform:scale(.975);opacity:.2;}
