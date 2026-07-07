@@ -152,7 +152,6 @@ export function SpotifyPreviewHome() {
                       ease: [0.22, 1, 0.36, 1],
                     }}
                   >
-                    <span className="menu-number">0{index + 1}</span>
                     <span>{label}</span>
                   </motion.a>
                 ))}
