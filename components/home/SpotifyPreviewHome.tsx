@@ -39,6 +39,7 @@ export function SpotifyPreviewHome() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  const menuEase = [0.22, 1, 0.36, 1] as const;
 
   useEffect(() => {
     const timer = window.setInterval(() => setWord((current) => (current + 1) % rotatingWords.length), 2200);
@@ -127,18 +128,16 @@ export function SpotifyPreviewHome() {
             ref={menuRef}
             id="editorial-menu"
             className="editorial-menu"
-            role="dialog"
-            aria-modal="true"
             aria-label="Site menu"
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 18, y: -10 }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 16, y: -8 }}
             animate={reduceMotion ? { opacity: 1 } : { opacity: 1, x: 0, y: 0 }}
             exit={{
               opacity: 0,
-              x: reduceMotion ? 0 : 18,
-              y: reduceMotion ? 0 : -10,
-              transition: { duration: reduceMotion ? 0.01 : 0.24, ease: [0.22, 1, 0.36, 1] },
+              x: reduceMotion ? 0 : 16,
+              y: reduceMotion ? 0 : -8,
+              transition: { duration: reduceMotion ? 0.01 : 0.26, ease: menuEase },
             }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.3, ease: menuEase }}
             onAnimationStart={() => {
               if (menuRef.current) menuRef.current.style.willChange = reduceMotion ? "opacity" : "transform, opacity";
             }}
@@ -154,34 +153,22 @@ export function SpotifyPreviewHome() {
               exit={{
                 opacity: 0,
                 y: 0,
-                transition: { duration: reduceMotion ? 0.01 : 0.18, ease: [0.22, 1, 0.36, 1] },
+                transition: { duration: reduceMotion ? 0.01 : 0.18, ease: menuEase },
               }}
-              transition={{ duration: reduceMotion ? 0.01 : 0.24, delay: reduceMotion ? 0 : 0.06, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.24, delay: reduceMotion ? 0 : 0.05, ease: menuEase }}
             >
               <nav className="editorial-links" aria-label="Menu navigation">
-                {menuItems.map(([label, href], index) => (
-                  <motion.a
+                {menuItems.map(([label, href]) => (
+                  <a
                     href={href}
                     key={label}
                     onClick={() => setMenuOpen(false)}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{
-                      duration: reduceMotion ? 0.01 : 0.24,
-                      delay: reduceMotion ? 0 : 0.06 + index * 0.03,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
                   >
                     <span>{label}</span>
-                  </motion.a>
+                  </a>
                 ))}
               </nav>
-              <motion.div
-                className="menu-bottom"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: reduceMotion ? 0.01 : 0.24, delay: reduceMotion ? 0 : 0.06, ease: [0.22, 1, 0.36, 1] }}
-              >
+              <div className="menu-bottom">
                 <nav className="menu-utilities" aria-label="Menu utility navigation">
                   <div className="menu-utility-primary">
                     <a href="/visit" onClick={() => setMenuOpen(false)}>Plan your visit</a>
@@ -193,7 +180,7 @@ export function SpotifyPreviewHome() {
                 <a className="menu-footer-logo" href="/" aria-label="S17 Church home" onClick={() => setMenuOpen(false)}>
                   <img src="/images/branding/s17-logo-white.png" alt="" />
                 </a>
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         )}
