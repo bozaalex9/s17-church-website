@@ -1,36 +1,44 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 
 const rotatingWords = ["friends", "neighbors", "disciples", "the city"];
 
-const features = [
-  ["A church that's actually for you", "Formed by grace, not performance. Come as you are, every week."],
-  ["Homes, not just Sundays", "Friends Houses meet all across Miami — real community, mid-week."],
-  ["A clear next step, always", "Next Steps class, serving teams, baptism — you're never stuck at “just visiting.”"],
-  ["Sent, not just gathered", "Mission isn't a program at the edge — it's the shape of a sent people."],
+const featureCards = [
+  {
+    title: "Gather",
+    body: "We gather as one family.",
+    image: "/images/preview/style20/asset-04.jpg",
+    alt: "Three generations of family smiling together",
+    color: "#0056b3",
+  },
+  {
+    title: "Grow",
+    body: "We grow together in faith.",
+    image: "/images/preview/style20/asset-06.jpg",
+    alt: "Friends at a picnic",
+    color: "#006742",
+  },
+  {
+    title: "Go",
+    body: "We go together into the city.",
+    image: "/images/preview/style20/asset-08.jpg",
+    alt: "Group photo in front of American flag",
+    color: "#C8102E",
+  },
 ];
 
-const pathway = [
-  ["✟", "01", "We gather", "We come together around Christ. Sundays are the family table of S17 — worship, Word, prayer, sacraments, and welcome."],
-  ["🌱", "02", "We grow", "We are formed in homes, habits, and community. Friends Houses and next steps help people move from attendance into discipleship."],
-  ["⌖", "03", "We go", "We love our neighbors and bless the city. Mission is not a program at the edge of the church — it is the shape of a sent people."],
-];
-
-const fieldNotes = [
-  [1011, "Baptisms on the beach, Easter Sunday."],
-  [1027, "A Friends House in Flagami, Tuesday night."],
-  [1025, "Setup crew before 9:30am service."],
-  [1035, "Serve Day at Fair Havens."],
-  [1050, "Communion, taken together."],
-];
-
-const nextSteps = [
-  ["📅", "Sunday Gathering", "9:30am & 11:15am", ["Worship, Word, and welcome", "Kids' programming every week", "No registration needed"], "See service times"],
-  ["⌂", "Friends House", "Weeknights", ["Homes across Miami", "Discipleship, not just discussion", "Open to all, first visit free"], "Find a house"],
-  ["♥", "Serve Day", "Monthly", ["Bless our Miami neighbors", "No experience required", "Teams for all ages"], "See upcoming dates"],
-  ["●", "New Here class", "First Sunday", ["Meet our pastors", "Hear the story of S17", "Coffee's on us"], "Reserve a seat"],
+const moments = [
+  ["/images/preview/style20/asset-10.jpg", "Two police officers holding a Salty Donuts gift bag", "Surprising the Coral Gables police with coffee and donuts."],
+  ["/images/preview/style20/asset-11.jpg", "Children listening to a storyteller at VBS", "Storytime at VBS this summer."],
+  ["/images/preview/style20/asset-12.jpg", "A volunteer filling out a form at a meeting", "Signing up to serve at a volunteer meeting."],
+  ["/images/preview/style20/asset-13.jpg", "A child wearing a red bandana at Rodeo Sunday", "Little cowgirl vibes at Rodeo Sunday."],
+  ["/images/preview/style20/asset-14.jpg", "Group praying with firefighters outside the station", "Praying for our firefighters outside the station."],
+  ["/images/preview/style20/asset-15.jpg", "Women gathered on the beach for Bible study at sunset", "Beach Bible study at sunset."],
+  ["/images/preview/style20/asset-16.jpg", "Praying with an Air Force recruiter on Memorial Day", "Praying for the Air Force on Memorial Day."],
+  ["/images/preview/style20/asset-17.jpg", "Women dressed up and laughing together at the Ladies Tea", "Dressed up and laughing at our Ladies' Tea."],
 ];
 
 export function SpotifyPreviewHome() {
@@ -82,19 +90,11 @@ export function SpotifyPreviewHome() {
     };
   }, [menuOpen]);
 
-  const menuItems = [
-    ["About", "/about"],
-    ["Gather", "/gather"],
-    ["Grow", "/grow"],
-    ["Go", "/go"],
-    ["Give", "/give"],
-  ];
-
   return (
     <main className={`spotify-home${menuOpen ? " menu-is-open" : ""}`} id="main-content">
       <header>
         <div className="wrap nav-inner">
-          <a href="#" className="logo"><img src="/images/preview/s17-preview-logo.png" alt="S17" style={{ height: 22, width: "auto" }} /></a>
+          <a href="#" className="logo"><img src="/images/preview/style20/asset-01.png" alt="S17" style={{ height: 22, width: "auto" }} /></a>
           <nav className="links" aria-label="Primary navigation">
             <div className="nav-dropdown">
               <span className="dd-trigger">Pathway <span className="caret">▼</span></span>
@@ -104,7 +104,7 @@ export function SpotifyPreviewHome() {
                 <a href="/go" className="dd-item"><div className="dd-title">Go <span>— Sent to love our neighbors.</span></div></a>
               </div>
             </div>
-            <a href="/about">About</a><a href="/give">Give</a>
+            <a href="#">Events</a><a href="/give">Give</a>
           </nav>
           <div className="nav-divider" />
           <div className="nav-right"><a href="#" className="text-link">Resources</a><a href="#" className="text-link">Contact</a></div>
@@ -157,60 +157,130 @@ export function SpotifyPreviewHome() {
               }}
               transition={{ duration: reduceMotion ? 0.01 : 0.24, delay: reduceMotion ? 0 : 0.05, ease: menuEase }}
             >
-              <nav className="editorial-links" aria-label="Menu navigation">
-                {menuItems.map(([label, href]) => (
-                  <a
-                    href={href}
-                    key={label}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    <span>{label}</span>
-                  </a>
-                ))}
-              </nav>
-              <div className="menu-bottom">
-                <nav className="menu-utilities" aria-label="Menu utility navigation">
-                  <div className="menu-utility-primary">
-                    <a href="/visit" onClick={() => setMenuOpen(false)}>Plan your visit</a>
-                    <a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a>
-                  </div>
-                  <span className="menu-separator" aria-hidden="true" />
-                  <a className="menu-login" href="https://s17.churchcenter.com/">Log in</a>
-                </nav>
-                <a className="menu-footer-logo" href="/" aria-label="S17 Church home" onClick={() => setMenuOpen(false)}>
-                  <img src="/images/branding/s17-logo-white.png" alt="" />
-                </a>
+              <button className="menu-close-spacer" aria-hidden="true" tabIndex={-1} />
+              <h1 className="mmenu-h1">Pathway</h1>
+              <div className="mmenu-pills">
+                <a href="/gather" className="mmenu-pill" onClick={() => setMenuOpen(false)}>Gather</a>
+                <a href="/grow" className="mmenu-pill" onClick={() => setMenuOpen(false)}>Grow</a>
+                <a href="/go" className="mmenu-pill" onClick={() => setMenuOpen(false)}>Go</a>
               </div>
+              <div className="mmenu-links-big">
+                <a href="#" onClick={() => setMenuOpen(false)}>Events</a>
+                <a href="/give" onClick={() => setMenuOpen(false)}>Give</a>
+              </div>
+              <div className="mmenu-divider" />
+              <div className="mmenu-links-small">
+                <a href="#" onClick={() => setMenuOpen(false)}>Resources</a>
+                <a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a>
+              </div>
+              <img className="mmenu-logo" src="/images/preview/style20/asset-02.png" alt="S17" />
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <section className="hero">
-        <div className="hero-mark"><img src="/images/preview/s17-preview-hero.jpg" alt="S17 community gathered outdoors in Miami" /></div>
+        <div className="hero-mark"><img src="/images/preview/style20/asset-03.jpg" alt="S17 community gathered outdoors in Miami" /></div>
         <div className="scrim" />
         <div className="hero-inner">
           <h1>The family for<br /><span className="rotate">{rotatingWords[word]}</span></h1>
-          <div className="ctas"><a href="#visit" className="btn-accent">Plan Your Visit</a><a href="/visit" className="btn-outline">See What to Expect</a></div>
-          <p className="fine-center">A church where friends become family.<br />New here? <a href="/visit">See what to expect.</a></p>
+          <div className="ctas"><a href="#visit" className="btn-accent">Plan Your Visit</a><a href="#" className="btn-outline">Watch Now</a></div>
+          <p className="fine-center">A church where friends become family.<br />New here? <a href="#">See what to expect.</a></p>
         </div>
       </section>
 
-      <section className="intro"><div className="wrap"><span className="eyebrow">Welcome to S17</span><h2 style={{ marginTop: 14 }}>As the family of God, S17 is where neighbors and disciples come together.</h2><p>It's the place to find your people, your next step, and a city worth blessing. The place that brings church into your whole life.</p><div className="intro-video"><img src="https://picsum.photos/id/1039/1200/675" alt="" /></div></div></section>
+      <section className="intro">
+        <img className="intro-bg" src="https://picsum.photos/id/1062/1200/1400" alt="" />
+        <div className="intro-scrim" />
+        <div className="wrap">
+          <h2 style={{ marginTop: 14 }}>As the city&apos;s church home, S17 is where neighbors and newcomers come together.</h2>
+          <p>It&apos;s the place to find your people for the season you&apos;re in. The place that brings grace to your whole life.</p>
+        </div>
+      </section>
 
-      <section className="featured"><div className="wrap"><span className="eyebrow">Current series</span><div className="featured-card" style={{ marginTop: 20 }}><div className="featured-text"><span className="badge">Sundays</span><h2>Ordinary People, Beheld by Christ</h2><p>A six-week walk through the Gospel of Mark — starting where everyone gets to start: not enough, but seen.</p><a href="#visit" className="btn-accent">Join us Sundays</a><p className="fine">Sundays, 9:30am & 11:15am · 5911 West Flagler St., Miami.</p></div><div className="featured-img"><img src="https://picsum.photos/id/1041/900/700" alt="Congregation gathered in worship" /></div></div></div></section>
+      <section className="device-section">
+        <div className="wrap">
+          <div className="device-head">
+            <h2>We are here with you</h2>
+            <p>No matter the season, no matter the distance you&apos;re still family.</p>
+          </div>
+          <div className="device-photo"><img src="https://picsum.photos/id/1027/900/540" alt="" /></div>
+          <div className="device-copy"><h3>On Sundays</h3><p>Join us in person at 9:30am or 11:15am at 5911 West Flagler St., Miami.</p></div>
+          <div className="device-photo"><img src="https://picsum.photos/id/1011/900/540" alt="" /></div>
+          <div className="device-copy"><h3>Anywhere</h3><p>Can&apos;t make it in? Stream every service live, or catch up after on YouTube.</p></div>
+          <div className="device-photo"><img src="https://picsum.photos/id/1025/900/540" alt="" /></div>
+          <div className="device-copy"><h3>In a home</h3><p>Real food, real conversation, real friendships — Friends Houses meet weekly across Miami.</p></div>
+        </div>
+      </section>
 
-      <section className="feature-list"><div className="wrap"><h2>With a family that never stops showing up</h2><div className="flist">{features.map(([title, body]) => <div className="flist-row" key={title}><span className="flist-check">+</span><div><h3>{title}</h3><p>{body}</p></div></div>)}</div><div style={{ marginTop: 36 }}><a href="#visit" className="btn-accent">Plan Your Visit</a><p className="fine">Sundays, 9:30am & 11:15am · 5911 West Flagler St., Miami.</p></div></div></section>
+      <section className="feature-list">
+        <div className="wrap">
+          <h2>With a family<br />that never stops</h2>
+          <div className="flist">
+            <div className="flist-row"><div className="flist-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 6.5c-1.5-1.2-3.6-1.8-6-1.8v13c2.4 0 4.5.6 6 1.8 1.5-1.2 3.6-1.8 6-1.8v-13c-2.4 0-4.5.6-6 1.8z" /><line x1="12" y1="6.5" x2="12" y2="19.5" /></svg></div><h3>Reading of Creeds</h3><p>We confess what the church has always believed. Ancient truth, spoken aloud.</p></div>
+            <div className="flist-row"><div className="flist-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><line x1="5" y1="9" x2="5" y2="15" /><line x1="9" y1="6" x2="9" y2="18" /><line x1="13" y1="3" x2="13" y2="21" /><line x1="17" y1="7" x2="17" y2="17" /><line x1="21" y1="10" x2="21" y2="14" /></svg></div><h3>Sound doctrine</h3><p>Lose yourself in truth clearly taught, rooted in Scripture and the confessions.</p></div>
+            <div className="flist-row"><div className="flist-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M8 15a4 4 0 0 1-4-4V7a4 4 0 0 1 8 0v4a4 4 0 0 1-4 4z" /><path d="M16 15a4 4 0 0 1-4-4V7a4 4 0 0 1 8 0v4a4 4 0 0 1-4 4z" /><path d="M6 15v1a4 4 0 0 0 4 4" /><path d="M14 15v1a4 4 0 0 0 4 4" /></svg></div><h3>Corporate confession</h3><p>Confess your sins together, or let the liturgy carry you automatically.</p></div>
+            <div className="flist-row"><div className="flist-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><path d="M8 12.5l2.5 2.5 5.5-6" /></svg></div><h3>Immersive worship</h3><p>Full voice, full heart — worship you can feel in your chest.</p></div>
+          </div>
+        </div>
+      </section>
 
-      <section className="pathway"><div className="wrap"><div className="pathway-head"><span className="eyebrow">The S17 pathway</span><h2 style={{ marginTop: 14 }}>We gather. We grow. We go.</h2></div><div className="pathway-grid">{pathway.map(([icon, numeral, title, body]) => <a href={`/${title.split(" ")[1]}`} className="pathway-card" key={title}><div className="top-row"><span style={{ fontSize: 22 }}>{icon}</span><span className="numeral">{numeral}</span></div><h3>{title}</h3><p>{body}</p><span className="more">Learn more →</span></a>)}</div></div></section>
+      <div className="cta-band" id="visit">
+        <a href="#visit" className="btn-accent">What to Expect</a>
+        <p className="fine">Sundays, 10am English &amp; 11:15am Spanish<br />5911 West Flagler St., Miami.</p>
+      </div>
 
-      <section className="engage"><div className="wrap"><div className="engage-head"><span className="eyebrow">However you engage</span><h2 style={{ marginTop: 14 }}>Take part wherever you are</h2></div><div className="engage-grid"><div className="engage-item"><div className="ic">📍</div><h3>In person</h3><p>Join the family every Sunday at our West Flagler gathering.</p></div><div className="engage-item"><div className="ic">▶</div><h3>Online</h3><p>Can't make it in? Every sermon is on YouTube, usually posted by Sunday evening.</p></div><div className="engage-item"><div className="ic">⌂</div><h3>In a home</h3><p>Friends Houses meet throughout the week — no Sunday required to belong.</p></div></div></div></section>
+      <div className="art-gap" />
 
-      <section className="field-notes"><div className="wrap fn-head"><span className="eyebrow">Shaping the everyday moments of S17</span><h2 style={{ marginTop: 14 }}>Real Sundays. Real people.</h2></div><div className="fn-strip">{fieldNotes.map(([id, caption]) => <figure className="fn-card" key={caption}><img src={`https://picsum.photos/id/${id}/400/400`} alt="" /><figcaption>{caption}</figcaption></figure>)}</div></section>
+      <section className="discover">
+        <div className="wrap">
+          <h2>Fresh ways to<br />grow deeper</h2>
+          <p className="sub">Formed for you, by grace.</p>
+        </div>
+      </section>
 
-      <section className="next-steps" id="visit"><div className="wrap"><div className="ns-head"><span className="eyebrow">Your next step</span><h2 style={{ marginTop: 14 }}>Come and see what God is building</h2><p>Plan your visit, meet the family, and take one clear next step toward life with Jesus and S17.</p></div><div className="ns-grid">{nextSteps.map(([icon, title, timing, items, action]) => <div className="ns-card" key={String(title)}><div className="ic">{icon as string}</div><h3>{title as string}</h3><div className="ns-price">{timing as string}</div><div className="ns-divider" /><ul>{(items as string[]).map((item) => <li key={item}>{item}</li>)}</ul><a href="/visit" className="cta">{action as string}</a></div>)}</div></div></section>
+      {featureCards.map((card) => (
+        <section className="fcard-section" key={card.title}>
+          <div className="wrap">
+            <div className="fcard-list">
+              <div className="feature-card" style={{ "--card-bg": card.color } as CSSProperties}>
+                <div className="fc-mockup">
+                  <img src={card.image} alt={card.alt} />
+                  <div className="fc-fade" />
+                </div>
+                <div className="fc-eyebrow-row"><img src="/images/preview/style20/asset-01.png" alt="S17" /><span>{card.title}</span></div>
+                <h3>{card.body}</h3>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))}
 
-      <footer><div className="wrap footer-grid"><div className="footer-brand"><p className="logo-f"><img src="/images/preview/s17-preview-logo.png" alt="S17" style={{ height: 26, width: "auto" }} /></p><p>Where friends become family.</p><p>5911 West Flagler St., Miami, FL 33144</p></div><div className="footer-col"><h4>Pathway</h4><ul><li><a href="/about">About</a></li><li><a href="/gather">Gather</a></li><li><a href="/grow">Grow</a></li><li><a href="/go">Go</a></li><li><a href="/give">Give</a></li></ul></div><div className="footer-col"><h4>Information</h4><ul><li><a href="/visit">Visit</a></li><li><a href="#">Events</a></li><li><a href="#">Resources</a></li><li><a href="#">Contact</a></li><li><a href="https://youtube.com/">Sermons on YouTube</a></li></ul></div><div className="footer-col"><h4>Social</h4><div className="social-row"><a href="#" aria-label="YouTube">YT</a><a href="#" aria-label="Instagram">IG</a><a href="#" aria-label="Facebook">FB</a></div></div></div><div className="wrap footer-bottom"><p>© 2026 S17 Church.</p><p>Beliefs live inside About. Sermons live on YouTube.</p></div></footer>
+      <section className="moments-section">
+        <div className="wrap">
+          <h2>Shaping the big<br />moments in<br />faith</h2>
+          <p className="sub">S17 is where faith takes root and life change begins. Be here when grace shows up.</p>
+        </div>
+        <div className="moments-strip">
+          {moments.map(([src, alt, caption]) => (
+            <div className="moments-item" key={caption}>
+              <img src={src} alt={alt} />
+              <p>{caption}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="final-cta">
+        <div className="wrap">
+          <h2>New here?</h2>
+          <p>Join us this Sunday and see what S17 is all about. No experience necessary — just come as you are.</p>
+          <a href="#visit" className="btn-accent">Plan Your Visit</a>
+          <a href="#pathway" className="soft-link">Or explore the S17 Path.</a>
+        </div>
+      </section>
+
+      <footer><div className="wrap footer-grid"><div className="footer-brand"><p className="logo-f"><img src="/images/preview/style20/asset-18.png" alt="S17" style={{ height: 26, width: "auto" }} /></p><p>Where friends become family.</p><p>5911 West Flagler St., Miami, FL 33144</p></div><div className="footer-col"><h4>Useful Links</h4><ul><li><a href="#visit">Plan Your Visit</a></li><li><a href="#">Support/Contact</a></li><li><a href="/give">Give</a></li></ul></div><div className="footer-col"><h4>About S17</h4><ul><li><a href="#">Path</a></li><li><a href="#">Beliefs</a></li><li><a href="#">Leaders</a></li></ul></div><div className="footer-col"><h4>Social</h4><div className="social-row"><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none" /></svg></a><a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.5 7.2s-.22-1.56-.9-2.24c-.86-.9-1.83-.9-2.27-.96C16.2 3.7 12 3.7 12 3.7h-.01s-4.2 0-7.33.3c-.44.06-1.41.06-2.27.96-.68.68-.9 2.24-.9 2.24S1.2 9 1.2 10.8v1.4C1.2 14 1.5 15.8 1.5 15.8s.22 1.56.9 2.24c.86.9 1.98.87 2.48.97 1.8.17 7.12.3 7.12.3s4.2-.01 7.33-.3c.44-.06 1.41-.06 2.27-.96.68-.68.9-2.24.9-2.24s.3-1.8.3-3.6v-1.4c0-1.8-.3-3.6-.3-3.6zM9.75 14.9V8.9l6 3-6 3z" /></svg></a><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.6h2.6l.4-3h-3v-1.9c0-.87.24-1.46 1.5-1.46h1.6V4.34c-.28-.04-1.23-.12-2.34-.12-2.32 0-3.9 1.4-3.9 4v2.2H8v3h2.4V21h3.1z" /></svg></a></div></div></div><div className="wrap footer-bottom"><p>© 2026 S17 Church.</p></div></footer>
     </main>
   );
 }

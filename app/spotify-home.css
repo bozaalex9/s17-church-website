@@ -6,13 +6,13 @@
     --ink:#FFFFFF;
     --ink-soft:rgba(255,255,255,0.7);
     --ink-mute:rgba(255,255,255,0.45);
-    --accent:#E8B33D;
+    --accent:#0ABAB5;
     --accent-ink:#0A0A0A;
     --line:rgba(255,255,255,0.12);
     --card:#161616;
   }
   .spotify-home *{box-sizing:border-box;margin:0;padding:0;}
-  .spotify-home{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;}
+  .spotify-home{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;}
   .spotify-home a{text-decoration:none;color:inherit;}
   .spotify-home img{display:block;max-width:100%;}
   .spotify-home h1, .spotify-home h2, .spotify-home h3{font-weight:800;letter-spacing:-0.02em;line-height:1.02;}
@@ -196,3 +196,84 @@
   @media(min-width:1024px){ .footer-grid{grid-template-columns:repeat(4,1fr);} }
 
 body:has(.spotify-home) > header, body:has(.spotify-home) > footer { display: none; }
+
+  .spotify-home .editorial-menu{position:fixed;inset:0;z-index:100;overflow-y:auto;background:#000;color:#fff;isolation:isolate;}
+  .spotify-home .menu-atmosphere{display:none;}
+  .spotify-home .menu-scene{max-width:600px;margin:0 auto;padding:28px 24px 48px;min-height:100%;display:flex;flex-direction:column;gap:0;justify-content:flex-start;}
+  .spotify-home .menu-close-spacer{align-self:flex-end;width:38px;height:38px;margin:-8px -8px 0 0;padding:8px;background:none;border:0;pointer-events:none;}
+  .spotify-home .mmenu-h1{font-size:clamp(2.4rem,9vw,3.2rem);font-weight:900;letter-spacing:-0.02em;margin-top:20px;line-height:1.02;}
+  .spotify-home .mmenu-pills{display:flex;flex-direction:column;gap:14px;margin-top:32px;}
+  .spotify-home .mmenu-pill{display:flex;align-items:center;justify-content:space-between;background:#232323;border-radius:12px;padding:20px 22px;font-size:19px;font-weight:700;color:var(--ink);}
+  .spotify-home .mmenu-links-big{display:flex;flex-direction:column;gap:24px;margin-top:44px;}
+  .spotify-home .mmenu-links-big a{font-size:26px;font-weight:800;color:var(--ink);}
+  .spotify-home .mmenu-links-big a:hover{color:var(--accent);}
+  .spotify-home .mmenu-divider{width:36px;height:3px;background:var(--ink);border-radius:2px;margin:28px 0;}
+  .spotify-home .mmenu-links-small{display:flex;flex-direction:column;gap:20px;}
+  .spotify-home .mmenu-links-small a{font-size:22px;font-weight:500;color:var(--ink-soft);}
+  .spotify-home .mmenu-logo{margin-top:auto;padding-top:56px;height:22px;width:auto;align-self:flex-start;}
+
+  .spotify-home .intro{position:relative;overflow:hidden;min-height:90vh;display:flex;align-items:flex-end;padding:0;border-top:0;}
+  .spotify-home .intro-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .spotify-home .intro-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.85) 100%);}
+  .spotify-home .intro .wrap{position:relative;z-index:2;padding-bottom:64px;}
+  .spotify-home .intro h2{font-size:32px;max-width:720px;color:var(--ink);}
+  .spotify-home .intro p{color:rgba(255,255,255,0.75);max-width:620px;margin-top:16px;font-size:16px;}
+
+  .spotify-home .device-section{background:var(--accent);color:var(--ink);padding:70px 0 60px;}
+  .spotify-home .device-head{text-align:center;}
+  .spotify-home .device-head h2{font-size:clamp(2.4rem,13vw,3.6rem);font-weight:900;line-height:1.02;letter-spacing:-0.02em;color:var(--ink);}
+  .spotify-home .device-head p{margin-top:38px;font-size:19px;line-height:1.45;color:rgba(255,255,255,0.8);max-width:420px;margin-left:auto;margin-right:auto;}
+  .spotify-home .device-photo{width:100%;margin-top:60px;border-radius:28px;overflow:hidden;aspect-ratio:5/3;background:rgba(0,0,0,0.1);}
+  .spotify-home .device-photo img{width:100%;height:100%;object-fit:cover;}
+  .spotify-home .device-copy{margin-top:32px;}
+  .spotify-home .device-copy h3{font-size:32px;font-weight:800;color:var(--ink);}
+  .spotify-home .device-copy p{margin-top:12px;font-size:18px;line-height:1.45;color:rgba(255,255,255,0.8);max-width:480px;}
+
+  .spotify-home .feature-list{padding:160px 0 90px;background:#000;border-top:0;}
+  .spotify-home .feature-list h2{margin-top:12px;text-align:center;font-size:clamp(2.4rem,11vw,3.6rem);font-weight:900;line-height:1.0;letter-spacing:-0.02em;max-width:none;}
+  .spotify-home .flist{margin-top:62px;display:flex;flex-direction:column;gap:0;}
+  .spotify-home .flist-row{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:0;border-top:0;}
+  .spotify-home .flist-row + .flist-row{margin-top:34px;}
+  .spotify-home .flist-row:last-child{border-bottom:0;}
+  .spotify-home .flist-icon{color:var(--accent);}
+  .spotify-home .flist-icon svg{width:24px;height:24px;display:block;}
+  .spotify-home .flist-row h3{margin-top:13px;font-size:20px;font-weight:800;}
+  .spotify-home .flist-row p{margin-top:14px;color:var(--ink-soft);font-size:16px;line-height:1.4;}
+
+  .spotify-home .art-gap{background:var(--bg);padding:123px 0 137px;display:flex;justify-content:center;}
+  .spotify-home .discover{background:var(--bg);padding:0 0 100px;text-align:center;}
+  .spotify-home .discover h2{font-size:clamp(2.4rem,11vw,3.6rem);font-weight:900;line-height:1.0;letter-spacing:-0.02em;}
+  .spotify-home .discover .sub{margin-top:40px;font-size:22px;font-weight:400;color:var(--ink-soft);}
+
+  .spotify-home .fcard-section{padding:80px 0;}
+  .spotify-home .fcard-list{display:flex;flex-direction:column;gap:24px;}
+  .spotify-home .feature-card{position:relative;border-radius:28px;overflow:hidden;background:var(--card-bg, #171717);padding:24px;}
+  .spotify-home .fc-mockup{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1.794/1;background:rgba(255,255,255,0.04);}
+  .spotify-home .fc-mockup img{width:100%;height:100%;object-fit:cover;display:block;}
+  .spotify-home .fc-mockup .fc-fade{position:absolute;inset:0;background:linear-gradient(to bottom, rgba(23,23,23,0) 72%, var(--card-bg, #171717) 97%);}
+  .spotify-home .feature-card .fc-eyebrow-row{margin-top:167px;display:flex;align-items:baseline;gap:6px;}
+  .spotify-home .feature-card .fc-eyebrow-row img{height:20px;width:auto;}
+  .spotify-home .feature-card .fc-eyebrow-row span{font-size:28px;font-weight:700;color:rgba(255,255,255,0.9);}
+  .spotify-home .feature-card h3{margin-top:6px;margin-bottom:45px;font-size:28px;font-weight:800;color:#fff;line-height:1.2;}
+  @media(min-width:800px){ .spotify-home .fcard-list{flex-direction:row;} .spotify-home .feature-card{flex:1;} }
+
+  .spotify-home .moments-section{background:#3B06E9;padding:193px 0 0;}
+  .spotify-home .moments-section h2{font-size:clamp(2.4rem,11vw,3.4rem);font-weight:900;line-height:1.0;letter-spacing:-0.02em;color:#fff;text-align:left;}
+  .spotify-home .moments-section .sub{margin-top:40px;font-size:22px;line-height:1.35;color:rgba(255,255,255,0.85);max-width:520px;}
+  .spotify-home .moments-strip{margin-top:48px;display:flex;gap:17px;overflow-x:auto;padding-left:20px;padding-right:0;padding-bottom:60px;scrollbar-width:none;}
+  .spotify-home .moments-strip::-webkit-scrollbar{display:none;}
+  .spotify-home .moments-item{flex:0 0 auto;width:160px;}
+  .spotify-home .moments-item img{width:100%;aspect-ratio:160/275;object-fit:cover;border-radius:8px;display:block;}
+  .spotify-home .moments-item p{margin-top:5px;font-size:14px;line-height:1.35;color:rgba(255,255,255,0.75);}
+  @media(min-width:700px){ .spotify-home .moments-item{width:220px;} }
+
+  .spotify-home .final-cta{background:var(--bg);padding:120px 0;text-align:center;}
+  .spotify-home .final-cta h2{font-size:34px;font-weight:800;color:var(--accent);}
+  .spotify-home .final-cta p{margin:16px auto 0;max-width:480px;font-size:17px;line-height:1.5;color:var(--ink-soft);}
+  .spotify-home .final-cta .btn-accent{margin-top:28px;}
+  .spotify-home .final-cta .soft-link{display:block;margin-top:60px;font-size:15px;color:var(--ink-soft);text-decoration:underline;}
+
+  .spotify-home footer{border-top:1px solid var(--line);padding:60px 0 40px;background:#000;color:#fff;}
+  .spotify-home footer h4,.spotify-home footer a,.spotify-home footer p{color:#fff;}
+  .spotify-home .social-row a{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.08);border:0;display:flex;align-items:center;justify-content:center;color:#fff;}
+  .spotify-home .social-row a svg{width:20px;height:20px;}
