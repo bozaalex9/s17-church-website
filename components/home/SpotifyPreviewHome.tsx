@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -46,8 +46,19 @@ export function SpotifyPreviewHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const menuEase = [0.22, 1, 0.36, 1] as const;
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroMediaScale = useTransform(heroScroll, [0, 1], [1.04, 1]);
+  const heroMediaY = useTransform(heroScroll, [0, 1], [0, -18]);
+  const heroMarkY = useTransform(heroScroll, [0, 1], [8, -46]);
+  const heroMarkOpacity = useTransform(heroScroll, [0, 1], [0.18, 0.08]);
+  const heroContentY = useTransform(heroScroll, [0, 1], [0, -34]);
+  const heroContentOpacity = useTransform(heroScroll, [0, 0.72], [1, 0.7]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setWord((current) => (current + 1) % rotatingWords.length), 2200);
@@ -179,15 +190,80 @@ export function SpotifyPreviewHome() {
         )}
       </AnimatePresence>
 
-      <section className="hero">
-        <div className="hero-mark"><img src="/images/preview/style20/asset-03.jpg" alt="S17 community gathered outdoors in Miami" /></div>
-        <div className="scrim" />
-        <div className="hero-inner">
-          <h1>The family for<br /><span className="rotate">{rotatingWords[word]}</span></h1>
-          <div className="ctas"><a href="#visit" className="btn-accent">Plan Your Visit</a><a href="#" className="btn-outline">Watch Now</a></div>
-          <p className="fine-center">A church where friends become family.<br />New here? <a href="#">See what to expect.</a></p>
-        </div>
-      </section>
+      <motion.section
+        ref={heroRef}
+        className="hero"
+        initial={reduceMotion ? { opacity: 0 } : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: reduceMotion ? 0.01 : 0.28, ease: menuEase }}
+      >
+        <motion.div
+          className="hero-mark"
+          initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
+          animate={reduceMotion ? undefined : { opacity: 0.94, scale: 1 }}
+          transition={{ duration: 0.72, ease: menuEase }}
+          style={reduceMotion ? undefined : { scale: heroMediaScale, y: heroMediaY }}
+        >
+          <img src="/images/preview/style20/asset-03.jpg" alt="S17 community gathered outdoors in Miami" />
+        </motion.div>
+        <motion.img
+          className="hero-brand-mark"
+          src="/images/preview/style20/asset-01.png"
+          alt=""
+          aria-hidden="true"
+          initial={reduceMotion ? false : { opacity: 0, scale: 1.05, y: 14 }}
+          animate={reduceMotion ? undefined : { opacity: 0.18, scale: 1, y: 8 }}
+          transition={{ duration: 0.7, delay: 0.08, ease: menuEase }}
+          style={reduceMotion ? undefined : { y: heroMarkY, opacity: heroMarkOpacity }}
+        />
+        <motion.div
+          className="scrim"
+          initial={reduceMotion ? false : { opacity: 0 }}
+          animate={reduceMotion ? undefined : { opacity: 1 }}
+          transition={{ duration: 0.42, ease: menuEase }}
+        />
+        <motion.div
+          className="hero-inner"
+          initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.992 }}
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.46, delay: 0.1, ease: menuEase }}
+          style={reduceMotion ? undefined : { y: heroContentY, opacity: heroContentOpacity }}
+        >
+          <h1>
+            The family for<br />
+            <span className="rotate-shell">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={rotatingWords[word]}
+                  className="rotate"
+                  initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.985 }}
+                  animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 1.015 }}
+                  transition={{ duration: reduceMotion ? 0.01 : 0.28, ease: menuEase }}
+                >
+                  {rotatingWords[word]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+          </h1>
+          <motion.div
+            className="ctas"
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.34, delay: 0.2, ease: menuEase }}
+          >
+            <a href="#visit" className="btn-accent">Plan Your Visit</a><a href="#" className="btn-outline">Watch Now</a>
+          </motion.div>
+          <motion.p
+            className="fine-center"
+            initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.34, delay: 0.26, ease: menuEase }}
+          >
+            A church where friends become family.<br />New here? <a href="#">See what to expect.</a>
+          </motion.p>
+        </motion.div>
+      </motion.section>
 
       <section className="intro">
         <img className="intro-bg" src="https://picsum.photos/id/1062/1200/1400" alt="" />
