@@ -53,12 +53,11 @@ export function SpotifyPreviewHome() {
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroMediaScale = useTransform(heroScroll, [0, 1], [1.04, 1]);
-  const heroMediaY = useTransform(heroScroll, [0, 1], [0, -18]);
-  const heroMarkY = useTransform(heroScroll, [0, 1], [8, -46]);
-  const heroMarkOpacity = useTransform(heroScroll, [0, 1], [0.18, 0.08]);
-  const heroContentY = useTransform(heroScroll, [0, 1], [0, -34]);
-  const heroContentOpacity = useTransform(heroScroll, [0, 0.72], [1, 0.7]);
+  const heroMediaScale = useTransform(heroScroll, [0, 1], [1, 1.06]);
+  const heroHeadlineY = useTransform(heroScroll, [0, 1], [0, -8]);
+  const heroHeadlineOpacity = useTransform(heroScroll, [0, 0.72, 1], [1, 0.92, 0.58]);
+  const heroSupportY = useTransform(heroScroll, [0, 1], [0, -12]);
+  const heroSupportOpacity = useTransform(heroScroll, [0, 0.68, 1], [1, 0.85, 0.45]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setWord((current) => (current + 1) % rotatingWords.length), 2200);
@@ -193,76 +192,74 @@ export function SpotifyPreviewHome() {
       <motion.section
         ref={heroRef}
         className="hero"
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: reduceMotion ? 0.01 : 0.28, ease: menuEase }}
       >
         <motion.div
-          className="hero-mark"
-          initial={reduceMotion ? false : { opacity: 0, scale: 1.08 }}
-          animate={reduceMotion ? undefined : { opacity: 0.94, scale: 1 }}
-          transition={{ duration: 0.72, ease: menuEase }}
-          style={reduceMotion ? undefined : { scale: heroMediaScale, y: heroMediaY }}
+          className="hero-media-stage"
+          initial={reduceMotion ? false : { opacity: 0, scale: 0.94, y: 18 }}
+          animate={reduceMotion ? undefined : { opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: reduceMotion ? 0.01 : 0.55, ease: menuEase }}
         >
-          <img src="/images/preview/style20/asset-03.jpg" alt="S17 community gathered outdoors in Miami" />
+          <motion.div
+            className="hero-mark"
+            style={reduceMotion ? undefined : { scale: heroMediaScale }}
+          >
+            <img src="/images/preview/style20/asset-03.jpg" alt="S17 community gathered outdoors in Miami" />
+          </motion.div>
         </motion.div>
-        <motion.img
-          className="hero-brand-mark"
-          src="/images/preview/style20/asset-01.png"
-          alt=""
-          aria-hidden="true"
-          initial={reduceMotion ? false : { opacity: 0, scale: 1.05, y: 14 }}
-          animate={reduceMotion ? undefined : { opacity: 0.18, scale: 1, y: 8 }}
-          transition={{ duration: 0.7, delay: 0.08, ease: menuEase }}
-          style={reduceMotion ? undefined : { y: heroMarkY, opacity: heroMarkOpacity }}
-        />
         <motion.div
           className="scrim"
           initial={reduceMotion ? false : { opacity: 0 }}
           animate={reduceMotion ? undefined : { opacity: 1 }}
           transition={{ duration: 0.42, ease: menuEase }}
         />
-        <motion.div
-          className="hero-inner"
-          initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.992 }}
-          animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.46, delay: 0.1, ease: menuEase }}
-          style={reduceMotion ? undefined : { y: heroContentY, opacity: heroContentOpacity }}
-        >
-          <h1>
-            The family for<br />
-            <span className="rotate-shell">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={rotatingWords[word]}
-                  className="rotate"
-                  initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.985 }}
-                  animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 1.015 }}
-                  transition={{ duration: reduceMotion ? 0.01 : 0.28, ease: menuEase }}
-                >
-                  {rotatingWords[word]}
-                </motion.span>
-              </AnimatePresence>
-            </span>
-          </h1>
-          <motion.div
-            className="ctas"
-            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.34, delay: 0.2, ease: menuEase }}
-          >
-            <a href="#visit" className="btn-accent">Plan Your Visit</a><a href="#" className="btn-outline">Watch Now</a>
-          </motion.div>
-          <motion.p
-            className="fine-center"
-            initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.34, delay: 0.26, ease: menuEase }}
-          >
-            A church where friends become family.<br />New here? <a href="#">See what to expect.</a>
-          </motion.p>
-        </motion.div>
+        <div className="hero-content-stage">
+          <div className="hero-inner">
+            <motion.div
+              className="hero-headline-stage"
+              initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.5, delay: reduceMotion ? 0 : 0.1, ease: menuEase }}
+            >
+              <motion.h1 style={reduceMotion ? undefined : { y: heroHeadlineY, opacity: heroHeadlineOpacity }}>
+                The family for<br />
+                <span className="rotate-shell">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={rotatingWords[word]}
+                      className="rotate"
+                      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.985 }}
+                      animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+                      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 1.015 }}
+                      transition={{ duration: reduceMotion ? 0.01 : 0.28, ease: menuEase }}
+                    >
+                      {rotatingWords[word]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+              </motion.h1>
+            </motion.div>
+            <motion.div
+              className="hero-cta-stage"
+              initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.42, delay: reduceMotion ? 0 : 0.2, ease: menuEase }}
+            >
+              <motion.div className="ctas" style={reduceMotion ? undefined : { y: heroSupportY, opacity: heroSupportOpacity }}>
+                <a href="#visit" className="btn-accent">Plan Your Visit</a><a href="#" className="btn-outline">Watch Now</a>
+              </motion.div>
+            </motion.div>
+            <motion.div
+              className="hero-copy-stage"
+              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.36, delay: reduceMotion ? 0 : 0.3, ease: menuEase }}
+            >
+              <motion.p className="fine-center" style={reduceMotion ? undefined : { y: heroSupportY, opacity: heroSupportOpacity }}>
+                A church where friends become family.<br />New here? <a href="#">See what to expect.</a>
+              </motion.p>
+            </motion.div>
+          </div>
+        </div>
       </motion.section>
 
       <section className="intro">
