@@ -201,9 +201,12 @@ export function SpotifyPreviewHome() {
         >
           <motion.div
             className="hero-mark"
-            style={reduceMotion ? undefined : { scale: heroMediaScale }}
           >
-            <img src="/images/preview/style20/asset-03.jpg" alt="S17 community gathered outdoors in Miami" />
+            <motion.img
+              src="/images/preview/style20/asset-03.jpg"
+              alt="S17 community gathered outdoors in Miami"
+              style={reduceMotion ? undefined : { scale: heroMediaScale }}
+            />
           </motion.div>
         </motion.div>
         <motion.div
