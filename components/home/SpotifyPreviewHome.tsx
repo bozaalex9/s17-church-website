@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -51,13 +51,19 @@ export function SpotifyPreviewHome() {
   const menuEase = [0.22, 1, 0.36, 1] as const;
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroRef,
-    offset: ["start start", "end start"],
+    offset: ["start start", "end end"],
   });
-  const heroMediaScale = useTransform(heroScroll, [0, 1], [1, 1.06]);
-  const heroHeadlineY = useTransform(heroScroll, [0, 1], [0, -8]);
-  const heroHeadlineOpacity = useTransform(heroScroll, [0, 0.72, 1], [1, 0.92, 0.58]);
-  const heroSupportY = useTransform(heroScroll, [0, 1], [0, -12]);
-  const heroSupportOpacity = useTransform(heroScroll, [0, 0.68, 1], [1, 0.85, 0.45]);
+  const heroTransitionProgress = useTransform(heroScroll, [0, 1], [0, 1]);
+  const heroMaskScale = useTransform(heroTransitionProgress, [0, 1], [1, 4.4]);
+  const heroMaskRadius = useTransform(heroMaskScale, (scale) => `${41 * scale}vmin`);
+  const heroMaskY = useTransform(heroTransitionProgress, [0, 1], ["0px", "-20px"]);
+  const heroMaskClipPath = useMotionTemplate`circle(${heroMaskRadius} at 50% calc(50% + ${heroMaskY}))`;
+  const heroHeadlineY = useTransform(heroTransitionProgress, [0, 1], ["0svh", "-148svh"]);
+  const heroSupportY = useTransform(heroTransitionProgress, [0, 1], ["0svh", "-122svh"]);
+  const editorialTextY = useTransform(heroTransitionProgress, [0, 1], ["138svh", "-6svh"]);
+  const heroCircleOverlayOpacity = useTransform(heroTransitionProgress, [0, 0.32, 1], [1, 1, 0]);
+  const heroGlobalDarkeningOpacity = useTransform(heroTransitionProgress, [0, 0.25, 0.5, 0.75, 1], [0.28, 0.24, 0.2, 0.18, 0.16]);
+  const heroBottomGradientOpacity = useTransform(heroTransitionProgress, [0, 0.25, 0.5, 0.75, 1], [0.15, 0.26, 0.5, 0.76, 1]);
 
   useEffect(() => {
     const timer = window.setInterval(() => setWord((current) => (current + 1) % rotatingWords.length), 2200);
@@ -193,86 +199,62 @@ export function SpotifyPreviewHome() {
         ref={heroRef}
         className="hero"
       >
+        <div className="hero-pin">
         <motion.div
           className="hero-media-stage"
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.94, y: 18 }}
-          animate={reduceMotion ? undefined : { opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: reduceMotion ? 0.01 : 0.55, ease: menuEase }}
         >
           <motion.div
             className="hero-mark"
+            style={reduceMotion ? undefined : { clipPath: heroMaskClipPath }}
           >
-            <motion.img
-              src="/images/preview/style20/asset-03.jpg"
-              alt="S17 community gathered outdoors in Miami"
-              style={reduceMotion ? undefined : { scale: heroMediaScale }}
-            />
+            <video
+              aria-label="S17 community gathered outdoors in Miami"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/images/home/hero-mobile-poster.jpg"
+            >
+              <source src="/videos/home/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
+              <source src="/videos/home/hero-desktop.mp4" type="video/mp4" />
+            </video>
+            <motion.div className="hero-global-dim" aria-hidden="true" style={reduceMotion ? undefined : { opacity: heroGlobalDarkeningOpacity }} />
+            <motion.div className="hero-bottom-gradient" aria-hidden="true" style={reduceMotion ? undefined : { opacity: heroBottomGradientOpacity }} />
+            <motion.div className="hero-circle-overlay" aria-hidden="true" style={reduceMotion ? undefined : { opacity: heroCircleOverlayOpacity }} />
           </motion.div>
         </motion.div>
-        <motion.div
-          className="scrim"
-          initial={reduceMotion ? false : { opacity: 0 }}
-          animate={reduceMotion ? undefined : { opacity: 1 }}
-          transition={{ duration: 0.42, ease: menuEase }}
-        />
         <div className="hero-content-stage">
           <div className="hero-inner">
-            <motion.div
-              className="hero-headline-stage"
-              initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: reduceMotion ? 0.01 : 0.5, delay: reduceMotion ? 0 : 0.1, ease: menuEase }}
-            >
-              <motion.h1 style={reduceMotion ? undefined : { y: heroHeadlineY, opacity: heroHeadlineOpacity }}>
-                The family for<br />
+            <motion.div className="hero-headline-stage" style={reduceMotion ? undefined : { y: heroHeadlineY }}>
+              <h1>
+                <span className="hero-line">The family</span>
+                <span className="hero-line">for</span>
                 <span className="rotate-shell">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={rotatingWords[word]}
-                      className="rotate"
-                      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.985 }}
-                      animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-                      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 1.015 }}
-                      transition={{ duration: reduceMotion ? 0.01 : 0.28, ease: menuEase }}
-                    >
-                      {rotatingWords[word]}
-                    </motion.span>
-                  </AnimatePresence>
+                  <span className="rotate">{rotatingWords[word]}</span>
                 </span>
-              </motion.h1>
+              </h1>
             </motion.div>
-            <motion.div
-              className="hero-cta-stage"
-              initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: reduceMotion ? 0.01 : 0.42, delay: reduceMotion ? 0 : 0.2, ease: menuEase }}
-            >
-              <motion.div className="ctas" style={reduceMotion ? undefined : { y: heroSupportY, opacity: heroSupportOpacity }}>
-                <a href="#visit" className="btn-accent">Plan Your Visit</a><a href="#" className="btn-outline">Watch Now</a>
-              </motion.div>
-            </motion.div>
-            <motion.div
-              className="hero-copy-stage"
-              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: reduceMotion ? 0.01 : 0.36, delay: reduceMotion ? 0 : 0.3, ease: menuEase }}
-            >
-              <motion.p className="fine-center" style={reduceMotion ? undefined : { y: heroSupportY, opacity: heroSupportOpacity }}>
-                A church where friends become family.<br />New here? <a href="#">See what to expect.</a>
-              </motion.p>
+            <motion.div className="hero-support-stage" style={reduceMotion ? undefined : { y: heroSupportY }}>
+              <div className="hero-cta-stage">
+                <div className="ctas">
+                  <a href="#visit" className="btn-accent">Plan Your Visit</a><a href="#" className="btn-outline">Watch Now</a>
+                </div>
+              </div>
+              <div className="hero-copy-stage">
+                <p className="fine-center">
+                  A church where friends become family.<br />New here? <a href="#">See what to expect.</a>
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>
-      </motion.section>
-
-      <section className="intro">
-        <img className="intro-bg" src="https://picsum.photos/id/1062/1200/1400" alt="" />
-        <div className="intro-scrim" />
-        <div className="wrap">
-          <h2 style={{ marginTop: 14 }}>As the city&apos;s church home, S17 is where neighbors and newcomers come together.</h2>
+        <motion.div className="hero-editorial-content wrap" style={reduceMotion ? undefined : { y: editorialTextY }}>
+          <h2>As the city&apos;s church home, S17 is where neighbors and newcomers come together.</h2>
           <p>It&apos;s the place to find your people for the season you&apos;re in. The place that brings grace to your whole life.</p>
+        </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       <section className="device-section">
         <div className="wrap">
@@ -284,7 +266,6 @@ export function SpotifyPreviewHome() {
           <div className="device-copy"><h3>On Sundays</h3><p>Join us in person at 9:30am or 11:15am at 5911 West Flagler St., Miami.</p></div>
           <div className="device-photo"><img src="https://picsum.photos/id/1011/900/540" alt="" /></div>
           <div className="device-copy"><h3>Anywhere</h3><p>Can&apos;t make it in? Stream every service live, or catch up after on YouTube.</p></div>
-          <div className="device-photo"><img src="https://picsum.photos/id/1025/900/540" alt="" /></div>
           <div className="device-copy"><h3>In a home</h3><p>Real food, real conversation, real friendships — Friends Houses meet weekly across Miami.</p></div>
         </div>
       </section>
